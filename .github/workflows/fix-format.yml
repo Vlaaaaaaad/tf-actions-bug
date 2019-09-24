@@ -1,0 +1,20 @@
+name: Formatting
+
+on: [pull_request_review]
+
+jobs:
+  Fix-Terraform:
+    name: Fix Terraform
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Clone repo
+        uses: actions/checkout@master
+        with:
+          fetch-depth: 1
+
+      - name: Fix formatting
+        uses: bltavares/actions/terraform@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          EXTRA_ARGS: ""

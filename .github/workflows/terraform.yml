@@ -1,0 +1,33 @@
+name: Terraform
+
+on: [push]
+
+jobs:
+  Format:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Clone repo
+        uses: actions/checkout@master
+        with:
+          fetch-depth: 1
+
+      - name: Check formatting
+        uses: bltavares/actions/terraform@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          EXTRA_ARGS: "-check"
+
+      - name: Click me for an easy formatting fix
+        if: failure()
+        run: |
+          cat << EOF
+            To get formatting fixed automagically just:
+              - go to "Files Changed" tab
+              - click "Review Changes"
+              - write "fix terraform"
+              - choose the "Comment" option
+              - click "Submit Review"
+
+            In a short wile a commit will appear fixing all your formatting issues.
+          EOF
